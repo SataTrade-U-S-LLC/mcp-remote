@@ -3290,7 +3290,7 @@ export function setupSignalHandlers(cleanup: () => Promise<void>) {
  * @param authorizeParams Optional extra authorization parameters
  * @param clientMetadataUrl Optional Client ID Metadata Document URL used as the client_id
  * @param tokenEndpoint Optional explicit token endpoint used by the client_credentials grant
- * @returns MD5 hash of the configuration
+ * @returns SHA-256 hash of the configuration
  */
 export function getServerUrlHash(
   serverUrl: string,
@@ -3322,7 +3322,7 @@ export function getServerUrlHash(
   // Client credentials and tokens are bound to the authorization server that issued them. A
   // changed endpoint must never inherit a token cached for the same MCP resource server.
   if (tokenEndpoint) parts.push(tokenEndpoint)
-  return crypto.createHash('md5').update(parts.join('|')).digest('hex')
+  return crypto.createHash('sha256').update(parts.join('|')).digest('hex')
 }
 
 /**
