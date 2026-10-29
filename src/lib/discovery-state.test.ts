@@ -253,7 +253,9 @@ describe('NodeOAuthClientProvider - persisted OAuth discovery state', () => {
 
     expect(result).toBe('REDIRECT')
     expect(network.discoveryRequests).toContain('https://mcp.example.test/.well-known/oauth-protected-resource/mcp')
-    expect(network.discoveryRequests.some((url) => url.startsWith('https://retired-as.example.test'))).toBe(false)
+    expect(
+      network.discoveryRequests.some((url) => new URL(url).origin === 'https://retired-as.example.test'),
+    ).toBe(false)
     expect(network.registrationRequests).toEqual([`${authorizationServerUrl}/register`])
   })
 })
